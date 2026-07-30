@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Useful Links</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            min-height: 100vh;
+            padding: 40px 20px; 
+            gap: 48px; /* Space between top and bottom panels */
+        }
+
+        /* Container for the panel - now scrolls with the page */
+        .panel-container {
+            width: 100%;
+            /* 6 columns * 96px (1in) + 5 gaps * 16px + padding 24px = ~680px max-width */
+            max-width: 800px; 
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+            /* Removed max-height and overflow-y to let the panel expand and scroll on the page level */
+        }
+
+        /* Grid layout for the boxes */
+        .link-grid {
+            display: grid;
+            /* 1in is exactly 96px in CSS */
+            grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+            gap: 16px;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        /* Box / Link styling */
+        .link-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 128px;       /* 1 inch */
+            height: 128px;      /* 1 inch */
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333333;
+            transition: all 0.2s ease-in-out;
+            padding: 8px;
+            position: relative;
+        }
+
+        .link-box:hover, .text-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #b0b0b0;
+            background-color: #ffffff;
+        }
+
+        /* Favicon styling */
+        .favicon-img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-bottom: 6px;
+            border-radius: 4px;
+        }
+
+        /* Label for fallback or identifying the site */
+        .link-label {
+            font-size: 11px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .search-input {
+            /* '5ch' makes the input exactly 5 characters wide, plus a tiny bit of breathing room */
+            width: 5.5ch; 
+            font-size: 12px;
+            padding: 4px 2px; /* Minimal side padding to save space */
+            border: 1px solid #ccd7e0;
+            border-radius: 4px;
+            text-align: left;
+            outline: none;
+            background: #ffffff;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        
+        /* 2 columns across the panel */
+        .text-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 16px;
+        }
+
+        /* Half the height of original boxes (64px) with centered large text */
+        .text-box {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 64px; /* Half height of 128px */
+            background-color: #fafafa;
+            border: 1px solid #BB0000;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333333;
+            transition: all 0.2s ease-in-out;
+            padding: 12px 24px;
+            text-align: left;
+            font-size: 16px; /* Larger text */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel-container">
+        <div class="link-grid">
+            <a href="https://app.qgenda.com/link/view?linkKey=c336a6f8-322b-44b3-a539-164b300c52f7&landingPageId=febcb605-f914-4bc2-8abc-d6eed3af7192" target="_blank" class="link-box" data-label="Daily Schedule"></a>
+            <a href="https://osuwmc.workspaceoneaccess.com/catalog-portal/ui#/apps" target="_blank" class="link-box" data-label="Remote IHIS"></a>
+            <a href="https://app.c8health.com/contacts" target="_blank" class="link-box google-icon" data-label="Contacts"></a>
+            <!-- PAGER / NUMERIC GET REQUEST BOX -->
+            <form action="https://webxchange.osumc.edu/webxchange/QuickPage.aspx" 
+                      method="get" 
+                      target="_blank" 
+                      class="link-box search-box" 
+                      data-href="https://webxchange.osumc.edu/webxchange/Default.aspx" 
+                      data-label="WebXchange">
+
+                <!-- Pager device emoji icon -->
+                <span class="search-icon" style="font-size: 32pt;">📟</span>
+                
+                <!-- Numeric input restricted to 4 or 5 digits -->
+                <input type="text" inputmode="numeric" pattern="\d{4,5}" maxlength="5" name="pagerid" placeholder="Pager" class="search-input" title="Pager ID" required autocomplete="off">
+                
+                <!-- Hardcoded hidden values -->
+                <input type="hidden" name="qp" value="y">
+                <input type="hidden" name="Pagelocation" value="quickpage">
+            </form>
+            <a href="https://osu.medhub.com/" target="_blank" class="link-box" data-label="MedHub"></a>
+            <a href="https://www.google.com/url?q=https%3A%2F%2Fapps.acgme.org%2Fconnect%2Flogin&sa=D&sntz=1&usg=AOvVaw3Ss99AU54wjk_08ppgCw-l" target="_blank" class="link-box" data-label="Case Logs"></a>
+            <a href="https://app.qgenda.com/landingpage/osuanes" target="_blank" class="link-box" data-label="QGenda"></a>
+            <a href="https://member.truelearn.net/" target="_blank" class="link-box" data-label="TrueLearn"></a>
+            <a href="https://app.c8health.com/" target="_blank" class="link-box google-icon" data-label="C8 Health"></a>
+            <a href="https://www.osuanes.app/home" target="_blank" class="link-box" data-label="OSUAnes"></a>
+            <a href="https://onfirstup.com/ohiostate/ohiostate/" target="_blank" class="link-box" data-label="HealthBeat HUB">
+                <img src="https://images.socialchorus.com/image/fetch/s--fdjbqSJC--/b_white,f_auto,q_auto/https://assets.socialchorus.com/production/10443/program_icon_images/63f0a99f-022a-4fe3-a243-5c5006b45390.png" alt="HUB" class="favicon-img">
+                <span class="link-label">HealthBeat HUB</span>
+            </a>
+            <a href="https://osumc.sharepoint.com/:x:/t/Anesthesiology/IQD3-oAJxKefQKOJJLoqkX03ARjVrxbZbmcK9ZjP9z1Ip6w?e=8M0GoG" target="_blank" class="link-box" data-label="Daily Capacity">
+                <img src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/excel_32x1.svg" alt="Excel" class="favicon-img">
+                <span class="link-label">Daily Capacity</span>
+            </a>
+            <a href="https://outlook.office.com.mcas.ms/mail/" target="_blank" class="link-box" data-label="Email">
+                <img src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/outlook_32x1.svg" alt="Outlook" class="favicon-img">
+                <span class="link-label">Email</span>
+            </a>
+            <!-- <a href="YOUR_URL" target="_blank" class="link-box" data-label="YOUR_LABEL"></a> -->
+        </div>
+    </div>
+
+    <div class="panel-container">
+        <div class="text-grid">
+            <a href="https://osumc.sharepoint.com.mcas.ms/:w:/r/sites/Pharmacy/_layouts/15/doc.aspx?sourcedoc=%7B911e4d87-2852-4247-82bb-3ab11466413b%7D&action=default&DefaultItemOpen=1&McasTsid=20892&McasCtx=4" target="_blank" class="text-box">Periop Antibiotics Grid</a>
+            <a href="hhttps://osumc.sharepoint.com.mcas.ms/sites/ebm/SitePages/Enhanced-Surgical-Recovery.aspx" target="_blank" class="text-box">ESR Guidelines</a>
+            <a href="https://osumc.sharepoint.com.mcas.ms/sites/ebm/Documents/Forms/AllItems.aspx?id=%2Fsites%2Febm%2FDocuments%2FGuidelines%2FPeriopGlucoseMgmt%2Epdf&parent=%2Fsites%2Febm%2FDocuments%2FGuidelines&McasTsid=20892&McasCtx=4" target="_blank" class="text-box">Periop Glucose Management</a>
+            <a href="https://osumc.sharepoint.com.mcas.ms/:w:/r/sites/Pharmacy/_layouts/15/doc.aspx?sourcedoc=%7B129eb41e-d081-41a3-8ae4-088e678038b8%7D&action=default&McasTsid=20892&McasCtx=4" target="_blank" class="text-box">Insulin Infusions</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const boxes = document.querySelectorAll(".link-box");
+
+            boxes.forEach(box => {
+                const url = box.href;
+                if (box.children.length == 0) {
+
+                    const labelText = box.getAttribute("data-label") || "Link";
+
+                    const domain = new URL(url).hostname;
+
+                    const duckDuckGoFavicon = `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+                    const googleFavicon = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+
+                    // Create image element
+                    const img = document.createElement("img");
+                    if (box.classList.contains("google-icon")) {
+                        img.src = googleFavicon;
+                    } else {
+                        img.src = duckDuckGoFavicon;
+                    }
+                    img.alt = labelText;
+                    img.classList.add("favicon-img");
+
+                    // Create text label element
+                    const label = document.createElement("span");
+                    label.classList.add("link-label");
+                    label.textContent = labelText;
+
+                    // Append elements into the box
+                    box.appendChild(img);
+                    box.appendChild(label);
+
+                }
+            });
+
+            // Add click handler so clicking the box acts like a hyperlink
+            const pagerForm = document.querySelector("form.search-box");
+
+            if (pagerForm) {
+                console.log('fuck');
+                pagerForm.style.cursor = "pointer";
+                pagerForm.addEventListener("click", (e) => {
+                    // Prevent navigation if user clicked inside the text input field
+                    if (e.target.tagName.toLowerCase() === "input") {
+                        return;
+                    }
+                    const targetUrl = pagerForm.getAttribute("data-href");
+                    if (targetUrl) {
+                        window.open(targetUrl, "_blank");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
