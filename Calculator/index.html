@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anesthetic Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            min-height: 100vh;
+            padding: 40px 20px; 
+            gap: 24px;
+            color: #333333;
+        }
+
+        .panel-container {
+            width: 100%;
+            max-width: 800px; 
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Input Controls Layout */
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #555555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calc-input {
+            width: 100%;
+            font-size: 15px;
+            padding: 10px 12px;
+            border: 1px solid #ccd7e0;
+            border-radius: 8px;
+            outline: none;
+            background: #fafafa;
+            font-family: inherit;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .calc-input:focus {
+            background: #ffffff;
+            border-color: #b0b0b0;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Segmented Button for Sex Toggle */
+        .toggle-group {
+            display: flex;
+            background: #f0f2f5;
+            border-radius: 8px;
+            padding: 3px;
+            height: 42px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .toggle-btn:hover {
+            color: #111;
+        }
+
+        .toggle-btn.active {
+            background: #ffffff;
+            color: #111;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Stat Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card {
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border-color: #b0b0b0;
+            background-color: #ffffff;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #666666;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .stat-unit {
+            font-size: 12px;
+            font-weight: 400;
+            color: #777;
+        }
+
+        /* Drug Table Styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .drug-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 8px;
+        }
+
+        .drug-table th {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            padding: 12px 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .drug-table td {
+            font-size: 13px;
+            padding: 14px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        .drug-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .drug-table tr:hover td {
+            background-color: #fafafa;
+        }
+
+        .drug-name {
+            font-weight: 600;
+            color: #222;
+        }
+
+        .subtext-gray {
+            font-size: 11px;
+            color: #888888;
+            margin-top: 2px;
+        }
+
+        .dose-result {
+            font-weight: 700;
+            color: #BB0000;
+            font-size: 14px;
+        }
+
+        .dose-weight-type {
+            font-size: 11px;
+            color: #777;
+            background: #eee;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        @media (max-width: 600px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PATIENT PARAMETERS & VENTILATION / WEIGHT PANEL -->
+    <div class="panel-container">
+        <div class="panel-title">
+            <span>Patient Parameters & Ventilation</span>
+        </div>
+
+        <div class="input-grid">
+            <!-- Sex Selection (Default: None) -->
+            <div class="input-group">
+                <label>Biological Sex</label>
+                <div class="toggle-group">
+                    <button type="button" class="toggle-btn" id="btn-male" onclick="setSex('male')">Male</button>
+                    <button type="button" class="toggle-btn" id="btn-female" onclick="setSex('female')">Female</button>
+                </div>
+            </div>
+
+            <!-- Height Input -->
+            <div class="input-group">
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" class="calc-input" placeholder="e.g. 175" min="50" max="250" step="0.5" autocomplete="off">
+            </div>
+
+            <!-- Weight Input -->
+            <div class="input-group">
+                <label for="weight">Actual Weight (kg)</label>
+                <input type="number" id="weight" class="calc-input" placeholder="e.g. 80" min="10" max="400" step="0.5" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Calculated Summary Cards -->
+        <div class="summary-grid">
+            <div class="stat-card">
+                <div class="stat-label">Ideal Body Weight (IBW)</div>
+                <div class="stat-value"><span id="ibw-val">--</span> <span class="stat-unit">kg</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Body Mass Index (BMI)</div>
+                <div class="stat-value"><span id="bmi-val">--</span> <span class="stat-unit">kg/m²</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tidal Volume (6 – 8 mL/kg IBW)</div>
+                <div class="stat-value"><span id="vt-val">--</span> <span class="stat-unit">mL</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADJUNCTS & SUGAMMADEX DOSING PANEL -->
+    <div class="panel-container">
+        <div class="panel-title">
+            <span>Anesthetic Adjuncts & Reversal</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="drug-table">
+                <thead>
+                    <tr>
+                        <th>Drug & Indication</th>
+                        <th>Standard Regimen</th>
+                        <th>Dosing Scalar</th>
+                        <th>Calculated Dose</th>
+                    </tr>
+                </thead>
+                <tbody id="drug-tbody">
+                    <!-- Populated via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let currentSex = null; // Default: unselected
+
+        // Drug configurations
+        const drugs = [
+            {
+                name: "Dexmedetomidine",
+                indication: "Adjunct / Sedation Bolus",
+                bolusText: "0.5 mcg/kg (over 10 min)",
+                infusionText: "+/- 0.2 – 0.7 mcg/kg/hr",
+                scalar: "TBW",
+                calc: (tbw, ibw) => tbw ? `${(0.5 * tbw).toFixed(1)} mcg` : "--"
+            },
+            {
+                name: "Ketamine",
+                indication: "Subanesthetic Analgesic Bolus",
+                bolusText: "0.25 – 0.5 mg/kg",
+                infusionText: "+/- 0.25 mg/kg/hr",
+                scalar: "IBW",
+                calc: (tbw, ibw) => ibw ? formatRange(0.25 * ibw, 0.5 * ibw, "mg") : "--"
+            },
+            {
+                name: "Magnesium Sulfate",
+                indication: "Antinociceptive Adjunct",
+                bolusText: "15 – 30 mg/kg (over 15 min)",
+                infusionText: "+/- 10 – 15 mg/kg/hr",
+                scalar: "TBW",
+                calc: (tbw, ibw) => tbw ? formatDecimalRange(0.015 * tbw, 0.03 * tbw, "g", 1) : "--"
+            },
+            {
+                name: "Sugammadex",
+                indication: "Neuromuscular Block Reversal (moderate - deep)",
+                bolusText: "2.0 – 4.0 mg/kg",
+                infusionText: null,
+                scalar: "TBW",
+                calc: (tbw, ibw) => tbw ? formatRange(2.0 * tbw, 4.0 * tbw, "mg") : "--"
+            }
+        ];
+
+        function setSex(sex) {
+            currentSex = sex;
+            document.getElementById('btn-male').classList.toggle('active', sex === 'male');
+            document.getElementById('btn-female').classList.toggle('active', sex === 'female');
+            calculateAll();
+        }
+
+        function formatRange(low, high, unit) {
+            return `${Math.round(low)} – ${Math.round(high)} ${unit}`;
+        }
+
+        function formatDecimalRange(low, high, unit, decimals = 1) {
+            return `${low.toFixed(decimals)} – ${high.toFixed(decimals)} ${unit}`;
+        }
+
+        function calculateAll() {
+            const heightCm = parseFloat(document.getElementById('height').value);
+            const weightKg = parseFloat(document.getElementById('weight').value);
+
+            const hasHeight = heightCm && heightCm > 0;
+            const hasWeight = weightKg && weightKg > 0;
+
+            let ibw = null;
+            let bmi = null;
+
+            // BMI calculation (TBW / m²)
+            if (hasHeight && hasWeight) {
+                const heightM = heightCm / 100;
+                bmi = weightKg / (heightM * heightM);
+                document.getElementById('bmi-val').textContent = bmi.toFixed(1);
+            } else {
+                document.getElementById('bmi-val').textContent = '--';
+            }
+
+            // IBW & Tidal Volume calculation (Devine Formula)
+            if (hasHeight && currentSex) {
+                const heightInches = heightCm / 2.54;
+                const heightOver5Ft = Math.max(0, heightInches - 60);
+
+                ibw = currentSex === 'male' 
+                    ? 50 + (2.3 * heightOver5Ft)
+                    : 45.5 + (2.3 * heightOver5Ft);
+
+                document.getElementById('ibw-val').textContent = ibw.toFixed(1);
+
+                // Lung-protective Vt: 6 - 8 mL/kg IBW
+                const vtMin = Math.round(6 * ibw);
+                const vtMax = Math.round(8 * ibw);
+                document.getElementById('vt-val').textContent = `${vtMin} – ${vtMax}`;
+            } else {
+                document.getElementById('ibw-val').textContent = '--';
+                document.getElementById('vt-val').textContent = '--';
+            }
+
+            renderTable(hasWeight ? weightKg : null, ibw);
+        }
+
+        function renderTable(tbw, ibw) {
+            const tbody = document.getElementById('drug-tbody');
+            tbody.innerHTML = '';
+
+            drugs.forEach(drug => {
+                const row = document.createElement('tr');
+                const doseDisplay = drug.calc(tbw, ibw);
+                const infusionMarkup = drug.infusionText 
+                    ? `<div class="subtext-gray">${drug.infusionText}</div>` 
+                    : '';
+
+                row.innerHTML = `
+                    <td>
+                        <div class="drug-name">${drug.name}</div>
+                        <div class="subtext-gray">${drug.indication}</div>
+                    </td>
+                    <td>
+                        <div>${drug.bolusText}</div>
+                        ${infusionMarkup}
+                    </td>
+                    <td><span class="dose-weight-type">${drug.scalar}</span></td>
+                    <td class="dose-result">${doseDisplay}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById('height').addEventListener('input', calculateAll);
+        document.getElementById('weight').addEventListener('input', calculateAll);
+
+        // Initial empty render
+        renderTable(null, null);
+    </script>
+</body>
+</html>
