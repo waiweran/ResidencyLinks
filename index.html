@@ -89,9 +89,22 @@
             width: 100%;
         }
 
-        .search-input {
+        .search-input-pager {
             /* '5ch' makes the input exactly 5 characters wide, plus a tiny bit of breathing room */
             width: 5.5ch; 
+            font-size: 12px;
+            padding: 4px 2px; /* Minimal side padding to save space */
+            border: 1px solid #ccd7e0;
+            border-radius: 4px;
+            text-align: left;
+            outline: none;
+            background: #ffffff;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        
+         .search-input-contact {
+            width: 12ch;
             font-size: 12px;
             padding: 4px 2px; /* Minimal side padding to save space */
             border: 1px solid #ccd7e0;
@@ -133,9 +146,26 @@
 
     <div class="panel-container">
         <div class="link-grid">
-            <a href="https://app.qgenda.com/link/view?linkKey=c336a6f8-322b-44b3-a539-164b300c52f7&landingPageId=febcb605-f914-4bc2-8abc-d6eed3af7192" target="_blank" class="link-box" data-label="Daily Schedule"></a>
+            <a href="https://app.qgenda.com/link/view?linkKey=c336a6f8-322b-44b3-a539-164b300c52f7&landingPageId=febcb605-f914-4bc2-8abc-d6eed3af7192" target="_blank" class="link-box" data-label="Room Schedules"></a>
             <a href="https://osuwmc.workspaceoneaccess.com/catalog-portal/ui#/apps" target="_blank" class="link-box" data-label="Remote IHIS"></a>
-            <a href="https://app.c8health.com/contacts" target="_blank" class="link-box google-icon" data-label="Contacts"></a>
+           <!-- CONTACTS / NAME GET REQUEST BOX -->
+            <form action="https://app.c8health.com/search" 
+                      method="get" 
+                      target="_blank" 
+                      class="link-box search-box" 
+                      data-href="https://app.c8health.com/contacts" 
+                      data-label="C8 Contacts">
+
+                <!-- Pager device emoji icon -->
+                <span class="search-icon" style="font-size: 32pt;">📇</span>
+                
+                <!-- Numeric input restricted to 4 or 5 digits -->
+                <input type="text" name="term" placeholder="Contact Name" class="search-input-contact" title="Contact Name" required autocomplete="off">
+                
+                <!-- Hardcoded hidden values -->
+                <input type="hidden" name="type" value="contacts">
+            </form>
+
             <!-- PAGER / NUMERIC GET REQUEST BOX -->
             <form action="https://webxchange.osumc.edu/webxchange/QuickPage.aspx" 
                       method="get" 
@@ -148,7 +178,7 @@
                 <span class="search-icon" style="font-size: 32pt;">📟</span>
                 
                 <!-- Numeric input restricted to 4 or 5 digits -->
-                <input type="text" inputmode="numeric" pattern="\d{4,5}" maxlength="5" name="pagerid" placeholder="Pager" class="search-input" title="Pager ID" required autocomplete="off">
+                <input type="text" inputmode="numeric" pattern="\d{4,5}" maxlength="5" name="pagerid" placeholder="Pager" class="search-input-pager" title="Pager ID" required autocomplete="off">
                 
                 <!-- Hardcoded hidden values -->
                 <input type="hidden" name="qp" value="y">
@@ -156,14 +186,12 @@
             </form>
             <a href="https://osu.medhub.com/" target="_blank" class="link-box" data-label="MedHub"></a>
             <a href="https://www.google.com/url?q=https%3A%2F%2Fapps.acgme.org%2Fconnect%2Flogin&sa=D&sntz=1&usg=AOvVaw3Ss99AU54wjk_08ppgCw-l" target="_blank" class="link-box" data-label="Case Logs"></a>
-            <a href="https://app.qgenda.com/landingpage/osuanes" target="_blank" class="link-box" data-label="QGenda"></a>
             <a href="https://member.truelearn.net/" target="_blank" class="link-box" data-label="TrueLearn"></a>
-            <a href="https://app.c8health.com/" target="_blank" class="link-box google-icon" data-label="C8 Health"></a>
+            <a href="https://www.openanesthesia.org/" target="_blank" class="link-box" data-label="OpenAnesthesia"></a>
+            <a href="https://education.asahq.org/totara/dashboard/" target="_blank" class="link-box" data-label="Anesthesia Toolbox"></a>
             <a href="https://www.osuanes.app/home" target="_blank" class="link-box" data-label="OSUAnes"></a>
-            <a href="https://onfirstup.com/ohiostate/ohiostate/" target="_blank" class="link-box" data-label="HealthBeat HUB">
-                <img src="https://images.socialchorus.com/image/fetch/s--fdjbqSJC--/b_white,f_auto,q_auto/https://assets.socialchorus.com/production/10443/program_icon_images/63f0a99f-022a-4fe3-a243-5c5006b45390.png" alt="HUB" class="favicon-img">
-                <span class="link-label">HealthBeat HUB</span>
-            </a>
+            <a href="https://app.qgenda.com/landingpage/osuanes" target="_blank" class="link-box" data-label="QGenda"></a>
+            <a href="https://app.c8health.com/" target="_blank" class="link-box google-icon" data-label="C8 Health"></a>
             <a href="https://osumc.sharepoint.com/:x:/t/Anesthesiology/IQD3-oAJxKefQKOJJLoqkX03ARjVrxbZbmcK9ZjP9z1Ip6w?e=8M0GoG" target="_blank" class="link-box" data-label="Daily Capacity">
                 <img src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/excel_32x1.svg" alt="Excel" class="favicon-img">
                 <span class="link-label">Daily Capacity</span>
@@ -172,9 +200,9 @@
                 <img src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/outlook_32x1.svg" alt="Outlook" class="favicon-img">
                 <span class="link-label">Email</span>
             </a>
-            <a href="https://docs.google.com/spreadsheets/d/1SrKMuvbkIo_SvqEqDMfe0-wdgzQCPPVfJEbEHhVjHAE/" target="_blank" class="link-box" data-label="OSU Breaksheet">
-                <img src="https://www.gstatic.com/images/branding/productlogos/sheets_2026/v2/web-48dp/logo_sheets_2026_color_2x_web_48dp.png" alt="Sheets" class="favicon-img">
-                <span class="link-label">OSU Breaksheet</span>
+            <a href="https://onfirstup.com/ohiostate/ohiostate/" target="_blank" class="link-box" data-label="HealthBeat HUB">
+                <img src="https://images.socialchorus.com/image/fetch/s--fdjbqSJC--/b_white,f_auto,q_auto/https://assets.socialchorus.com/production/10443/program_icon_images/63f0a99f-022a-4fe3-a243-5c5006b45390.png" alt="HUB" class="favicon-img">
+                <span class="link-label">HealthBeat HUB</span>
             </a>
             <!-- <a href="YOUR_URL" target="_blank" class="link-box" data-label="YOUR_LABEL"></a> -->
         </div>
@@ -186,9 +214,19 @@
             <a href="https://osumc.sharepoint.com.mcas.ms/sites/ebm/SitePages/Enhanced-Surgical-Recovery.aspx" target="_blank" class="text-box">ESR Guidelines</a>
             <a href="https://osumc.sharepoint.com.mcas.ms/sites/ebm/Documents/Forms/AllItems.aspx?id=%2Fsites%2Febm%2FDocuments%2FGuidelines%2FPeriopGlucoseMgmt%2Epdf&parent=%2Fsites%2Febm%2FDocuments%2FGuidelines&McasTsid=20892&McasCtx=4" target="_blank" class="text-box">Periop Glucose Management</a>
             <a href="https://osumc.sharepoint.com.mcas.ms/:w:/r/sites/Pharmacy/_layouts/15/doc.aspx?sourcedoc=%7B129eb41e-d081-41a3-8ae4-088e678038b8%7D&action=default&McasTsid=20892&McasCtx=4" target="_blank" class="text-box">Insulin Infusions</a>
-            <a href="./Calculator/" class="text-box">Dosing Calculator</a>
+            <a href="./Calculator/" target="_blank" class="text-box">Dosing Calculator</a>
         </div>
     </div>
+
+ <div class="panel-container">
+        <div class="text-grid">
+            <a href="https://docs.google.com/spreadsheets/d/1SrKMuvbkIo_SvqEqDMfe0-wdgzQCPPVfJEbEHhVjHAE/" target="_blank"class="text-box">OSU Breaksheet</a>
+            <a href="https://docs.google.com/spreadsheets/d/1yOuOfkc_5l6olNxuCphdcNmqg-OKM0vyo6uGxTVXOnE/" target="_blank" class="text-box">Attending Contact Preferences</a>
+            <a href="https://docs.google.com/spreadsheets/d/1XZr1AUlEEVI7EJ2VxmqAwuQI6xksSZxe4y2OGr7nKq4/" target="_blank" class="text-box">Resident Schedule</a>
+            <a href="https://osumc-my.sharepoint.com.mcas.ms/:w:/g/personal/roth84_osumc_edu/IQA6H-973BDsT63phdTk4VdnAX3ehHV22WWc-5v3obqPWEE" target="_blank" class="text-box">CA1 Survival Guide</a>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
