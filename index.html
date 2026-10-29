@@ -266,22 +266,22 @@
             });
 
             // Add click handler so clicking the box acts like a hyperlink
-            const pagerForm = document.querySelector("form.search-box");
+            const clickForms = document.querySelectorAll("form.search-box");
 
-            if (pagerForm) {
+            clickForms.forEach(clickForm => {
                 console.log('fuck');
-                pagerForm.style.cursor = "pointer";
-                pagerForm.addEventListener("click", (e) => {
+                clickForm.style.cursor = "pointer";
+                clickForm.addEventListener("click", (e) => {
                     // Prevent navigation if user clicked inside the text input field
                     if (e.target.tagName.toLowerCase() === "input") {
                         return;
                     }
-                    const targetUrl = pagerForm.getAttribute("data-href");
+                    const targetUrl = clickForm.getAttribute("data-href");
                     if (targetUrl) {
                         window.open(targetUrl, "_blank");
                     }
                 });
-            }
+            });
         });
     </script>
 </body>
